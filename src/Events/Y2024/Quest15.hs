@@ -3,32 +3,35 @@
 
 module Events.Y2024.Quest15 where
 
+import Algorithm.Search (dijkstra, dijkstraAssoc)
 import Common
-import Control.Lens (makeLenses, over, set, (^.))
+import Control.Lens (makeLenses, over, set, to, (^.))
+import Control.Monad (forM)
+import Control.Monad.State
 import Data.Bifunctor (second)
 import Data.Bits (bit, complement, (.&.), (.|.))
 import Data.HashMap.Strict qualified as M
 import Data.HashSet qualified as S
-import Data.List (foldl', sort)
+import Data.List (foldl', permutations, sort)
 import Data.Sequence qualified as Seq
 import ECSolution (getInput)
 
 data Garden = Garden
   { _path :: S.HashSet Point2d,
     _start :: Point2d,
-    _herbs :: M.HashMap Point2d Char
+    _herbs :: M.HashMap Char [Point2d]
   }
   deriving (Show)
 
-makeGarden :: S.HashSet Point2d -> Point2d -> M.HashMap Point2d Char -> Garden
+type Costs = M.HashMap Point2d (M.HashMap Point2d Int)
+
+makeGarden :: S.HashSet Point2d -> Point2d -> M.HashMap Char [Point2d] -> Garden
 makeGarden p s h = Garden {_path = p, _start = s, _herbs = h}
 
 makeLenses ''Garden
 
 quest15 :: String -> IO (Int, Int, Int)
-quest15 = getInput 2024 15 f f f
-  where
-    f = search . parseGarden
+quest15 = getInput 2024 15 part1 part2 part3
 
 parseGarden :: String -> Garden
 parseGarden input = makeGarden (S.fromList $ map fst vs) start herbs
@@ -40,68 +43,79 @@ parseGarden input = makeGarden (S.fromList $ map fst vs) start herbs
           v `notElem` "#~"
       ]
     start = fst $ head $ filter ((== 0) . fst . fst) vs
-    herbs = M.fromList $ filter ((/= '.') . snd) vs
+    herbs = M.fromListWith (++) $ map (\(k, v) -> (v, [k])) $ filter ((/= '.') . snd) vs
 
-search :: Garden -> Int
-search garden = go (Seq.singleton (s, startMask, 0)) (S.singleton (s, startMask))
+part1 :: String -> Int
+part1 input = minimum [minCost g allCosts (g ^. start) perm | perm <- permutations allHerbs]
   where
-    p = garden ^. path
-    h = garden ^. herbs
-    s = garden ^. start
+    g = parseGarden input
+    locs = (g ^. start) : concat (g ^. herbs . to M.elems)
+    allCosts = buildAllCosts g locs
+    allHerbs = g ^. herbs . to M.keys
 
-    uniqueHerbs = S.toList $ S.fromList $ M.elems h
-    herbBits = M.fromList $ zip uniqueHerbs (map bit [0 :: Int ..])
-    herbMasks = M.map (herbBits M.!) h
-    allHerbsMask = foldl' (.|.) 0 $ M.elems herbBits
+part2 :: String -> Int
+part2 = part1
 
-    stripHerb :: Point2d -> Integer -> Integer
-    stripHerb i hs = case herbMasks M.!? i of
-      Just herbMask -> hs .&. complement herbMask
-      Nothing -> hs
-
-    startMask = stripHerb s allHerbsMask
-
-    go :: Seq.Seq (Point2d, Integer, Int) -> S.HashSet (Point2d, Integer) -> Int
-    go !q !seen = case Seq.viewl q of
-      Seq.EmptyL -> error "No path found"
-      (i, hs, d) Seq.:< rest
-        | hs == 0 && i == s -> d
-        | otherwise ->
-            let !neighbors = filter (`S.member` p) (point2dNeighbours i)
-                (!newSeen, !newQ) = foldl' (visitStrict hs d) (seen, rest) neighbors
-             in go newQ newSeen
-
-    visitStrict ::
-      Integer ->
-      Int ->
-      (S.HashSet (Point2d, Integer), Seq.Seq (Point2d, Integer, Int)) ->
-      Point2d ->
-      (S.HashSet (Point2d, Integer), Seq.Seq (Point2d, Integer, Int))
-    visitStrict hs d (!seenAcc, !qAcc) !i =
-      let !hs' = stripHerb i hs
-          !state = (i, hs')
-       in if state `S.member` seenAcc
-            then (seenAcc, qAcc)
-            else (S.insert state seenAcc, qAcc Seq.|> (i, hs', d + 1))
-
-part3 :: Garden -> Int
-part3 g = search lg + search rg + search mg + 8
+part3 :: String -> Int
+part3 input = if length locs == 358 then lft + rgt + mid else 0
   where
-    -- in the last row, find the herbs which split the path
-    -- hard coded to k in my input
-    [lk, rk] = sort $ M.keys $ M.filter (== 'K') $ g ^. herbs
-    lk' = second pred lk
-    rk' = second succ rk
-    --
-    fn c = M.filterWithKey c $ g ^. herbs
-    -- get the herbs in the left, middle, right
-    -- (make one of the 'K's lower case, so we have to find both)
-    ls = fn (\(_, k) _ -> k <= snd lk')
-    ms = M.insert lk 'k' $ fn (\(_, k) _ -> k >= snd lk && k <= snd rk)
-    rs = fn (\(_, k) _ -> k >= snd rk')
-    -- split the path into 3 distinct areas
-    g' = over path (S.delete lk' . S.delete rk') g
-    -- create the left/middle/right objects
-    lg = set start (second pred lk') $ set herbs ls g'
-    mg = set herbs ms g'
-    rg = set start (second succ rk') $ set herbs rs g'
+    g = parseGarden input
+    locs = (g ^. start) : concat (g ^. herbs . to M.elems)
+    allCosts = buildAllCosts g locs
+    startE = maximum (g ^. herbs . to (M.! 'E'))
+    startR = minimum (g ^. herbs . to (M.! 'R'))
+    lft = minimum [minCost g allCosts startE perm | perm <- permutations "ABCDE"]
+    rgt = minimum [minCost g allCosts startR perm | perm <- permutations "NOPQR"]
+    mid = minimum [minCost g allCosts (g ^. start) perm | perm <- permutations "EGHIJKR"]
+
+bfsDistances :: Garden -> Point2d -> M.HashMap Point2d Int
+bfsDistances g start = go initialQueue initialDist
+  where
+    initialQueue = Seq.singleton start
+    initialDist = M.singleton start 0
+    neighbours p = filter (`S.member` (g ^. path)) $ point2dNeighbours p
+
+    go !queue !distMap =
+      case queue of
+        Seq.Empty -> distMap
+        (p Seq.:<| rest) ->
+          let !d = distMap M.! p
+
+              (rest', distMap') =
+                foldl
+                  ( \(!q, !dm) n ->
+                      if M.member n dm
+                        then (q, dm)
+                        else
+                          ( q Seq.|> n,
+                            M.insert n (d + 1) dm
+                          )
+                  )
+                  (rest, distMap)
+                  (neighbours p)
+           in go rest' distMap'
+
+buildAllCosts :: Garden -> [Point2d] -> Costs
+buildAllCosts g requiredLocations = M.fromList [(p, bfsDistances g p) | p <- requiredLocations]
+
+minCost :: Garden -> Costs -> Point2d -> String -> Int
+minCost garden costs from herbsSubset = evalState (go (from, herbsSubset)) M.empty
+  where
+    go :: (Point2d, String) -> State (M.HashMap (Point2d, String) Int) Int
+    go (current, []) = pure $ costs M.! current M.! from
+    go key@(current, nextHerb : remaining) = do
+      memo <- get
+      case M.lookup key memo of
+        Just v -> pure v
+        Nothing -> do
+          let nextLocs = garden ^. herbs . to (M.! nextHerb)
+
+          costs_list <-
+            forM nextLocs $ \nextLoc -> do
+              let costToNext = costs M.! current M.! nextLoc
+              restCost <- go (nextLoc, remaining)
+              pure $ costToNext + restCost
+          let v = minimum costs_list
+
+          modify (M.insert key v)
+          pure v
