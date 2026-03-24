@@ -324,3 +324,6 @@ findRepeatingPattern iterations f createKey solve input = values HM.! index
 
 both :: (a, a) -> (a -> b) -> (b, b)
 both (x, y) f = (f x, f y)
+
+allM :: (Traversable t, Monad f) => (a -> f Bool) -> t a -> f Bool
+allM f = fmap and . mapM f

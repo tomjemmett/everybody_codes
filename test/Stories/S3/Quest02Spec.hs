@@ -7,8 +7,8 @@ spec :: Spec
 spec = describe "Story 3, Quest 2" $ do
   it "Sample" $ do
     s <- quest02 "sample"
-    s `shouldBe` (0, 0, 0)
+    s `shouldBe` (12, 47, 239)
 
   it "Actual" $ do
     a <- quest02 "actual"
-    a `shouldBe` (0, 0, 0)
+    a `shouldBe` (283, 3307, 2901)
