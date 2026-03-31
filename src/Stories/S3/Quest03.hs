@@ -116,37 +116,40 @@ makeTree makeConnection (n : ns) = foldl (addNodeToTree makeConnection) (Tree n)
 addNodeToTree :: MakeConnection -> Tree -> Node -> Tree
 addNodeToTree makeConnection (Tree root) n = Tree $ go root n
   where
+    go :: Node -> Node -> Node
     go t n = case tryInsertLeft t n of
       (t', Nothing) -> t'
       (t', Just n') -> go t' n'
+
     tryInsertLeft :: Node -> Node -> (Node, Maybe Node)
-    tryInsertLeft t n = do
-      let con = makeConnection (t ^. leftSocket) (n ^. plug)
-      case t ^. leftNode of
-        Nothing -> case con of
+    tryInsertLeft t n = maybe emptyLeft nonEmptyLeft (t ^. leftNode)
+      where
+        con = makeConnection (t ^. leftSocket) (n ^. plug)
+        emptyLeft = case con of
           Nothing -> tryInsertRight t n
           Just b -> (t & leftNode ?~ (b, n), Nothing)
-        Just (b, ln) -> do
-          let c = fromMaybe False con
+        nonEmptyLeft (b, ln) =
           if b < c
             then
               tryInsertRight (t & leftNode ?~ (c, n)) ln
-            else
-              let (t', n') = tryInsertLeft ln n
-               in case n' of
-                    Nothing -> (t & leftNode ?~ (b, t'), Nothing)
-                    Just n'' -> tryInsertRight (t & leftNode ?~ (b, t')) n''
+            else case n' of
+              Nothing -> (t & leftNode ?~ (b, t'), Nothing)
+              Just n'' -> tryInsertRight (t & leftNode ?~ (b, t')) n''
+          where
+            c = fromMaybe False con
+            (t', n') = tryInsertLeft ln n
+
     tryInsertRight :: Node -> Node -> (Node, Maybe Node)
-    tryInsertRight t n = do
-      let con = makeConnection (t ^. rightSocket) (n ^. plug)
-      case t ^. rightNode of
-        Nothing -> case con of
+    tryInsertRight t n = maybe emptyRight nonEmptyRight (t ^. rightNode)
+      where
+        con = makeConnection (t ^. rightSocket) (n ^. plug)
+        emptyRight = case con of
           Nothing -> (t, Just n)
           Just b -> (t & rightNode ?~ (b, n), Nothing)
-        Just (b, rn) -> do
-          let c = fromMaybe False con
+        nonEmptyRight (b, rn) =
           if b < c
             then (t & rightNode ?~ (c, n), Just rn)
-            else
-              let (t', n') = tryInsertLeft rn n
-               in (t & rightNode ?~ (b, t'), n')
+            else (t & rightNode ?~ (b, t'), n')
+          where
+            c = fromMaybe False con
+            (t', n') = tryInsertLeft rn n
