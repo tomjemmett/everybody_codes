@@ -136,7 +136,7 @@
             Stories.S3.Quest02
             Stories.S3.Quest03
         hs-source-dirs:   src
-        hs-source-dirs:   src
+        ghc-options: -threaded -rtsopts -O2
 
     executable ec2024
         import:           shared-properties
