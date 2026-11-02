@@ -127,6 +127,24 @@
         -- 2026
             Events.Y2026.Quest01
             Events.Y2026.Quest02
+            Events.Y2026.Quest03
+            Events.Y2026.Quest04
+            Events.Y2026.Quest05
+            Events.Y2026.Quest06
+            Events.Y2026.Quest07
+            Events.Y2026.Quest08
+            Events.Y2026.Quest09
+            Events.Y2026.Quest10
+            Events.Y2026.Quest11
+            Events.Y2026.Quest12
+            Events.Y2026.Quest13
+            Events.Y2026.Quest14
+            Events.Y2026.Quest15
+            Events.Y2026.Quest16
+            Events.Y2026.Quest17
+            Events.Y2026.Quest18
+            Events.Y2026.Quest19
+            Events.Y2026.Quest20
         -- Story 1
             Stories.S1.Quest01
             Stories.S1.Quest02
@@ -239,6 +257,24 @@
         -- 2026
             Events.Y2026.Quest01Spec
             Events.Y2026.Quest02Spec
+            Events.Y2026.Quest03Spec
+            Events.Y2026.Quest04Spec
+            Events.Y2026.Quest05Spec
+            Events.Y2026.Quest06Spec
+            Events.Y2026.Quest07Spec
+            Events.Y2026.Quest08Spec
+            Events.Y2026.Quest09Spec
+            Events.Y2026.Quest10Spec
+            Events.Y2026.Quest11Spec
+            Events.Y2026.Quest12Spec
+            Events.Y2026.Quest13Spec
+            Events.Y2026.Quest14Spec
+            Events.Y2026.Quest15Spec
+            Events.Y2026.Quest16Spec
+            Events.Y2026.Quest17Spec
+            Events.Y2026.Quest18Spec
+            Events.Y2026.Quest19Spec
+            Events.Y2026.Quest20Spec
         -- Story 1
             Stories.S1.Quest01Spec
             Stories.S1.Quest02Spec
