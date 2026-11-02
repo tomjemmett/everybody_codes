@@ -74,6 +74,7 @@
         exposed-modules:
             Events.Y2024.Quests
             Events.Y2025.Quests
+            Events.Y2026.Quests
             Stories.S1.Quests
             Stories.S2.Quests
             Stories.S3.Quests
@@ -123,6 +124,8 @@
             Events.Y2025.Quest18
             Events.Y2025.Quest19
             Events.Y2025.Quest20
+        -- 2026
+            Events.Y2026.Quest01
         -- Story 1
             Stories.S1.Quest01
             Stories.S1.Quest02
@@ -224,6 +227,8 @@
             Events.Y2025.Quest18Spec
             Events.Y2025.Quest19Spec
             Events.Y2025.Quest20Spec
+        -- 2026
+            Events.Y2026.Quest01Spec
         -- Story 1
             Stories.S1.Quest01Spec
             Stories.S1.Quest02Spec
