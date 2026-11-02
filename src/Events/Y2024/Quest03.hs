@@ -14,9 +14,9 @@ parseInput :: String -> Grid
 parseInput input =
   H.fromList
     [ (i, j)
-      | (i, xs) <- zip [0 ..] $ lines input,
-        (j, x) <- zip [0 ..] xs,
-        x == '#'
+    | (i, xs) <- zip [0 ..] $ lines input,
+      (j, x) <- zip [0 ..] xs,
+      x == '#'
     ]
 
 part1, part2, part3 :: String -> Int

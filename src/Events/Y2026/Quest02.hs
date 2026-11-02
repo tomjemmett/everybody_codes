@@ -1,10 +1,10 @@
 module Events.Y2026.Quest02 where
 
-import Common 
+import Common
+import Data.HashMap.Strict qualified as M
 import ECSolution (getInput)
 import Text.Parsec qualified as P
 import Text.Parsec.String (Parser)
-import Data.HashMap.Strict qualified as M
 
 quest02 :: String -> IO (Int, Int, Int)
 quest02 = getInput 2026 2 solve solve solve
@@ -28,7 +28,7 @@ getChecksum = read . reverse . concat . go
   where
     go :: M.HashMap Int [Int] -> [String]
     go m | M.null m = []
-    go m = show v : go m' 
+    go m = show v : go m'
       where
-        v = head $ M.keys $ M.filter (==[]) m
-        m' = M.map (filter (/=v)) $ M.delete v m
+        v = head $ M.keys $ M.filter (== []) m
+        m' = M.map (filter (/= v)) $ M.delete v m

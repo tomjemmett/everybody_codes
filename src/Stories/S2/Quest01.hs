@@ -77,6 +77,6 @@ permutationsOfSize = go
     go _ [] = []
     go k ys =
       [ y : rest
-        | y <- ys,
-          rest <- go (k - 1) (delete y ys)
+      | y <- ys,
+        rest <- go (k - 1) (delete y ys)
       ]

@@ -41,9 +41,9 @@ parseInput input = (S.fromList $ map fst g, S.fromList trees)
   where
     g =
       [ ((i, j), v)
-        | (i, line) <- zip [0 ..] $ lines input,
-          (j, v) <- zip [0 ..] line,
-          v /= '#'
+      | (i, line) <- zip [0 ..] $ lines input,
+        (j, v) <- zip [0 ..] line,
+        v /= '#'
       ]
     trees = [p | (p, v) <- g, v == 'P']
 

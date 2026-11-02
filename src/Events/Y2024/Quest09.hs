@@ -33,8 +33,8 @@ part3 xs = sum $ map go xs
     go b =
       minimum $
         [ dp V.! (b1 - i) + dp V.! (b2 + i)
-          | i <- [0 .. 50],
-            b2 - b1 + 2 * i <= 100
+        | i <- [0 .. 50],
+          b2 - b1 + 2 * i <= 100
         ]
       where
         b1 = b `div` 2

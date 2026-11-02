@@ -32,7 +32,7 @@ part3 input = sum $ map (best -) $ filter (> 0) res
       | testLength == 4 = [1, 0, 1, 1]
       | otherwise =
           [ if x `elem` negativeInputs then 0 else 1
-            | x <- [1 .. length (head tests)]
+          | x <- [1 .. length (head tests)]
           ]
     best = head $ runTests (plants, [xs])
     res = runTests (plants, tests)

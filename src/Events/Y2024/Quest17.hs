@@ -17,9 +17,9 @@ quest17 = getInput 2024 17 p1 p2 p3
 parseStars :: String -> [Point2d]
 parseStars input =
   [ (i, j)
-    | (i, line) <- zip [0 ..] $ lines input,
-      (j, v) <- zip [0 ..] line,
-      v == '*'
+  | (i, line) <- zip [0 ..] $ lines input,
+    (j, v) <- zip [0 ..] line,
+    v == '*'
   ]
 
 prim :: Int -> [Point2d] -> [Int]
@@ -33,7 +33,7 @@ prim maxD xs = (S.size v + r) : prim maxD xs'
       M.map (filter ((< maxD) . snd)) $
         M.fromList
           [ (i, [(j, manhattanDistance i j) | j <- xs, i /= j])
-            | i <- xs
+          | i <- xs
           ]
     go :: (S.HashSet Point2d, Int) -> (S.HashSet Point2d, Int)
     go (visited, s)

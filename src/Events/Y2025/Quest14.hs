@@ -45,7 +45,7 @@ tileRound :: V.Vector (V.Vector Char) -> V.Vector (V.Vector Char)
 tileRound tiles =
   V.fromList
     [ V.fromList [f (x, y) | y <- [0 .. ncol - 1]]
-      | x <- [0 .. nrow - 1]
+    | x <- [0 .. nrow - 1]
     ]
   where
     nrow = V.length tiles
@@ -66,8 +66,8 @@ isTargetPattern :: V.Vector (V.Vector Char) -> V.Vector (V.Vector Char) -> Bool
 isTargetPattern v1 v2 =
   and
     [ v1 V.! x V.! y == v2 V.! (x + ad) V.! (y + ad)
-      | x <- [0 .. s1 - 1],
-        y <- [0 .. s1 - 1]
+    | x <- [0 .. s1 - 1],
+      y <- [0 .. s1 - 1]
     ]
   where
     s1 = V.length v1

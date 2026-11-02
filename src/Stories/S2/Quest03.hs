@@ -101,11 +101,11 @@ play (die, todo) = do
             tell (S.singleton (r, c))
             pure
               [ (r + dr, c + dc)
-                | (dr, dc) <- [(-1, 0), (1, 0), (0, -1), (0, 1), (0, 0)],
-                  r + dr >= 0,
-                  r + dr < nrow,
-                  c + dc >= 0,
-                  c + dc < ncol
+              | (dr, dc) <- [(-1, 0), (1, 0), (0, -1), (0, 1), (0, 0)],
+                r + dr >= 0,
+                r + dr < nrow,
+                c + dc >= 0,
+                c + dc < ncol
               ]
           else pure []
       else pure []

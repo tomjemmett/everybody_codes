@@ -73,8 +73,8 @@ gridPointValue grid (x, y) = grid V.! y V.! x
 allGridPoints :: V.Vector (V.Vector Int) -> [Point2d]
 allGridPoints grid =
   [ (x, y)
-    | x <- [0 .. V.length (grid V.! 0) - 1],
-      y <- [0 .. V.length grid - 1]
+  | x <- [0 .. V.length (grid V.! 0) - 1],
+    y <- [0 .. V.length grid - 1]
   ]
 
 costInRange :: Int -> (Point2d, V.Vector (V.Vector Int)) -> Int
@@ -91,9 +91,9 @@ parseInput input = (volcano, grid)
     volcano =
       head
         [ (x, y)
-          | x <- [0 .. V.length (grid V.! 0) - 1],
-            y <- [0 .. length grid - 1],
-            grid V.! y V.! x == 10
+        | x <- [0 .. V.length (grid V.! 0) - 1],
+          y <- [0 .. length grid - 1],
+          grid V.! y V.! x == 10
         ]
     fn = \case
       '@' -> 10

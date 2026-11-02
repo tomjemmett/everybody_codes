@@ -9,7 +9,6 @@ spec = describe "Quest 6" $ do
     s <- quest06 "sample"
     s `shouldBe` (0, 0, 0)
 
-
   it "Actual" $ do
     a <- quest06 "actual"
     a `shouldBe` (0, 0, 0)

@@ -30,8 +30,8 @@ makeGrid input = A.array ((0, 0), b) x
   where
     x =
       [ ((i, j), v)
-        | (i, line) <- zip [0 ..] $ lines input,
-          (j, v) <- zip [0 ..] line
+      | (i, line) <- zip [0 ..] $ lines input,
+        (j, v) <- zip [0 ..] line
       ]
     b = maximum $ map fst x
 
@@ -46,16 +46,16 @@ runInstructions i@(i', _) = (i', snd $ foldl go i xs)
         n =
           cycle
             [ (x + x', y + y')
-              | (x', y') <-
-                  [ (-1, -1),
-                    (-1, 0),
-                    (-1, 1),
-                    (0, 1),
-                    (1, 1),
-                    (1, 0),
-                    (1, -1),
-                    (0, -1)
-                  ]
+            | (x', y') <-
+                [ (-1, -1),
+                  (-1, 0),
+                  (-1, 1),
+                  (0, 1),
+                  (1, 1),
+                  (1, 0),
+                  (1, -1),
+                  (0, -1)
+                ]
             ]
         m = take 8 $ drop (if i == 'R' then 1 else 7) n
         xs = zip m $ map (g A.!) n

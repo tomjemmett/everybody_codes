@@ -26,8 +26,8 @@ parts12 f = maximum . map go . parseInput
       read $
         concat
           [ show $ powSomeMod nm (exp - i)
-            | i <- [0 .. rng exp],
-              exp - i >= 0
+          | i <- [0 .. rng exp],
+            exp - i >= 0
           ]
       where
         nm = toInteger n `modulo` fromIntegral mod

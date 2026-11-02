@@ -49,9 +49,9 @@ parseInput input = (adjacents, start, end, S.fromList $ map fst ts)
     xs =
       concat
         [ [ ((x, y), v)
-            | (x, v) <- zip [0 ..] ln
+          | (x, v) <- zip [0 ..] ln
           ]
-          | (y, ln) <- zip [0 ..] $ lines input
+        | (y, ln) <- zip [0 ..] $ lines input
         ]
     size = maximum $ map (snd . fst) xs
     Just (start, _) = find ((== 'S') . snd) ts

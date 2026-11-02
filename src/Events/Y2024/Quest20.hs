@@ -27,9 +27,9 @@ parseInput input = (M.fromList g, start)
   where
     g =
       [ ((i, j), v)
-        | (i, line) <- zip [0 ..] $ lines input,
-          (j, v) <- zip [0 ..] line,
-          v /= '#'
+      | (i, line) <- zip [0 ..] $ lines input,
+        (j, v) <- zip [0 ..] line,
+        v /= '#'
       ]
     start = fst . head $ filter ((== 'S') . snd) g
 

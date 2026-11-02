@@ -43,8 +43,8 @@ part2and3 xs input = countTrue isJust as
     a = parseComplex input
     as =
       [ fn $ addComplex a (i :+ j)
-        | i <- xs,
-          j <- xs
+      | i <- xs,
+        j <- xs
       ]
     fn a' = iterate (cycleComplex a' b) (Just $ 0 :+ 0) !! 100
     b = 100000 :+ 100000

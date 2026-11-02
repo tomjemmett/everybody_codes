@@ -38,9 +38,9 @@ parseGarden input = makeGarden (S.fromList $ map fst vs) start herbs
   where
     vs =
       [ ((i, j), v)
-        | (i, line) <- zip [0 ..] $ lines input,
-          (j, v) <- zip [0 ..] line,
-          v `notElem` "#~"
+      | (i, line) <- zip [0 ..] $ lines input,
+        (j, v) <- zip [0 ..] line,
+        v `notElem` "#~"
       ]
     start = fst $ head $ filter ((== 0) . fst . fst) vs
     herbs = M.fromListWith (++) $ map (\(k, v) -> (v, [k])) $ filter ((/= '.') . snd) vs

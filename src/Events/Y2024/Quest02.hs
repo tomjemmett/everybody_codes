@@ -60,13 +60,13 @@ part3 (parseInput -> (words, target)) = length . nub . concat $ p3
             -- replicate the horizontal line so we can handle "wrapping" from left to right
             map (concat . replicate 2) $
               [ [((i, j), t) | (j, t) <- zip [0 ..] ts]
-                | (i, ts) <- zip [0 ..] target
+              | (i, ts) <- zip [0 ..] target
               ]
           -- do the same for the vertical view of the grid, no need to handle "wrapping"
           target_v =
             [ [ ((i, j), t) | (i, t) <- zip [0 ..] ts
               ]
-              | (j, ts) <- zip [0 ..] $ transpose target
+            | (j, ts) <- zip [0 ..] $ transpose target
             ]
           -- combine these into our new targets
           targets = target_h ++ target_v

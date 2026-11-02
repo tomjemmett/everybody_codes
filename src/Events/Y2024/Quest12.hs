@@ -23,9 +23,9 @@ parseGrid = f <$> (P.many1 (P.oneOf ('.' : '=' : csts)) `P.sepEndBy` P.newline)
       partition
         ((`elem` ts) . fst)
         [ (v, (i, j))
-          | (i, line) <- zip [0 ..] $ reverse lines,
-            (j, v) <- zip [0 ..] line,
-            v `elem` csts
+        | (i, line) <- zip [0 ..] $ reverse lines,
+          (j, v) <- zip [0 ..] line,
+          v `elem` csts
         ]
 
 parseMeteors :: Parser [Point2d]

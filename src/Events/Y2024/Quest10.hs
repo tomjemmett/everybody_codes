@@ -10,7 +10,6 @@ import ECSolution (getInput)
 import Text.Parsec qualified as P
 import Text.Parsec.String (Parser)
 
-
 gridChar :: [Char]
 gridChar = '?' : '*' : '.' : ['A' .. 'Z']
 
@@ -19,13 +18,13 @@ quest10 = getInput 2024 10 p1 p2 p3
   where
     p1 = part1 <$> parse pGrid
     p2 = part2 <$> parse pGrids . (++ "\n\n\n")
-     where
-      pGrids =
-        do
-          let lp = P.many1 (P.oneOf gridChar) `P.sepBy` P.char ' ' <* P.try P.newline
-          v <- map makeGrid . transpose <$> replicateM 9 lp
-          n <- P.try pGrids P.<|> pure []
-          pure $ v ++ n
+      where
+        pGrids =
+          do
+            let lp = P.many1 (P.oneOf gridChar) `P.sepBy` P.char ' ' <* P.try P.newline
+            v <- map makeGrid . transpose <$> replicateM 9 lp
+            n <- P.try pGrids P.<|> pure []
+            pure $ v ++ n
     p3 = part3 <$> parse pGrid
 
 pGrid :: Parser (M.HashMap Point2d Char)
@@ -43,9 +42,9 @@ makeGrid :: [String] -> M.HashMap Point2d Char
 makeGrid s =
   M.fromList
     [ ((i, j), v)
-      | (i, line) <- zip [0 ..] s,
-        (j, v) <- zip [0 ..] line,
-        v /= '*'
+    | (i, line) <- zip [0 ..] s,
+      (j, v) <- zip [0 ..] line,
+      v /= '*'
     ]
 
 part1 :: M.HashMap Point2d Char -> String
@@ -75,8 +74,8 @@ getKeys :: Point2d -> [Point2d]
 getKeys (oi, oj) =
   concat
     [ [(oi + x, oj + y), (oi + y, oj + x)]
-      | x <- [2 .. 5],
-        y <- [0, 1, 6, 7]
+    | x <- [2 .. 5],
+      y <- [0, 1, 6, 7]
     ]
 
 getDots :: Point2d -> [Point2d]

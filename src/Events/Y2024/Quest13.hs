@@ -20,9 +20,9 @@ parseMaze = do
   lines <- P.many1 (P.oneOf " #0123456789SE") `P.sepEndBy` P.newline
   let vs =
         [ ((i, j), v)
-          | (i, line) <- zip [0 ..] lines,
-            (j, v) <- zip [0 ..] line,
-            v `notElem` " #"
+        | (i, line) <- zip [0 ..] lines,
+          (j, v) <- zip [0 ..] line,
+          v `notElem` " #"
         ]
       s = map fst $ filter ((== 'S') . snd) vs
       Just (e, _) = find ((== 'E') . snd) vs

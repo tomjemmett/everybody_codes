@@ -1,13 +1,13 @@
 module Events.Y2026.Quest20 where
 
-import Common 
+import Common
 import ECSolution (getInput)
 import Text.Parsec qualified as P
 import Text.Parsec.String (Parser)
 
 quest20 :: String -> IO (Int, Int, Int)
 quest20 = getInput 2026 20 part1 part2 part3
-  
+
 part1 :: String -> Int
 part1 = const 0
 

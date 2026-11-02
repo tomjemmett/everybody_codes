@@ -35,10 +35,10 @@ part3 input = max a b
     lines = zipWith (createLine p) i (tail i)
     otherLines =
       [ createLine p a b
-        | a <- [1 .. maximum i],
-          b <- [1 .. maximum i],
-          a < b,
-          (a, b) `notElem` zip i (tail i)
+      | a <- [1 .. maximum i],
+        b <- [1 .. maximum i],
+        a < b,
+        (a, b) `notElem` zip i (tail i)
       ]
     a = succ $ maximum $ zipWith checkIntersections (inits lines) lines
     b = maximum $ map (checkIntersections lines) otherLines
@@ -49,8 +49,8 @@ createCoordinates = M.fromList . zip [1 ..] . pointsOnCircle . maximum
 pointsOnCircle :: Int -> [Point]
 pointsOnCircle n =
   [ (cos theta, sin theta)
-    | k <- [0 .. n - 1],
-      let theta = 2 * pi * fromIntegral k / fromIntegral n
+  | k <- [0 .. n - 1],
+    let theta = 2 * pi * fromIntegral k / fromIntegral n
   ]
 
 createLine :: M.HashMap Int Point -> Int -> Int -> Line
