@@ -1,6 +1,6 @@
 module Events.Y2026.Quests
   ( quest01,
-    -- quest02,
+    quest02,
     -- quest03,
     -- quest04,
     -- quest06,
@@ -30,7 +30,7 @@ import Data.Bifunctor (bimap)
 import Data.Char (toUpper)
 import ECSolution
 import Events.Y2026.Quest01 (quest01)
--- import Events.Y2026.Quest02 (quest02)
+import Events.Y2026.Quest02 (quest02)
 -- import Events.Y2026.Quest03 (quest03)
 -- import Events.Y2026.Quest04 (quest04)
 -- import Events.Y2026.Quest05 (quest05)
@@ -55,8 +55,8 @@ import System.TimeIt (timeIt)
 import Text.Printf (printf)
 
 quests =
-  [ fmap makeSolution . quest01
-    -- fmap makeSolution . quest02,
+  [ fmap makeSolution . quest01,
+    fmap makeSolution . quest02
     -- fmap makeSolution . quest03,
     -- fmap makeSolution . quest04,
     -- fmap makeSolution . quest06,

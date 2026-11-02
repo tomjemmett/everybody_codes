@@ -126,6 +126,7 @@
             Events.Y2025.Quest20
         -- 2026
             Events.Y2026.Quest01
+            Events.Y2026.Quest02
         -- Story 1
             Stories.S1.Quest01
             Stories.S1.Quest02
@@ -152,6 +153,14 @@
     executable ec2025
         import:           shared-properties
         main-is:          Y2025.hs
+        build-depends:
+            everybody-codes
+        hs-source-dirs:   app
+        ghc-options: -threaded -rtsopts -O2
+
+    executable ec2026
+        import:           shared-properties
+        main-is:          Y2026.hs
         build-depends:
             everybody-codes
         hs-source-dirs:   app
@@ -229,6 +238,7 @@
             Events.Y2025.Quest20Spec
         -- 2026
             Events.Y2026.Quest01Spec
+            Events.Y2026.Quest02Spec
         -- Story 1
             Stories.S1.Quest01Spec
             Stories.S1.Quest02Spec
