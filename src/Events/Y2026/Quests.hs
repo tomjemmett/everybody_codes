@@ -59,7 +59,7 @@ quests =
     fmap makeSolution . quest02,
     fmap makeSolution . quest03,
     fmap makeSolution . quest04,
-    fmap makeSolution . quest06,
+    fmap makeSolution . quest05,
     fmap makeSolution . quest06,
     fmap makeSolution . quest07,
     fmap makeSolution . quest08,
