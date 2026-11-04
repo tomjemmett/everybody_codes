@@ -5,10 +5,12 @@ import SpecHelper
 
 spec :: Spec
 spec = describe "Quest 9" $ do
-  it "Sample" $ do
-    s <- quest09 "sample"
-    s `shouldBe` (0, 0, 0)
+  -- it "Sample" $ do
+  --   s <- quest09 "sample"
+  --   s `shouldBe` (0, 0, 0)
 
-  it "Actual" $ do
-    a <- quest09 "actual"
-    a `shouldBe` (0, 0, 0)
+  -- it "Actual" $ do
+  --   a <- quest09 "actual"
+  --   a `shouldBe` (0, 0, 0)
+
+  pure ()

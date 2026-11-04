@@ -25,7 +25,7 @@ module Events.Y2026.Quests
 where
 
 import Common
-import Control.Monad (when)
+import Control.Monad (guard, when)
 import Data.Bifunctor (bimap)
 import Data.Char (toUpper)
 import ECSolution
@@ -80,18 +80,21 @@ quests =
 runQuest :: Int -> IO ()
 runQuest quest = do
   let d = quests !! pred quest
-  contents <- readFile (createPath "sample" 2026 quest 1)
+  let path = createPath "sample" 2026 quest 1
+  pathExists <- doesFileExist path
+  when pathExists do
+    contents <- readFile path
 
-  when (contents /= "") $ timeIt do
-    putStrLn $ replicate 80 '-'
-    putStrLn $ "Quest: " ++ show quest
-    putStrLn ""
-    putStrLn "Sample:"
-    d "sample" >>= showQuest
-    putStrLn ""
-    putStrLn "Actual:"
-    d "actual" >>= showQuest
-    putStrLn ""
+    when (contents /= "") $ timeIt do
+      putStrLn $ replicate 80 '-'
+      putStrLn $ "Quest: " ++ show quest
+      putStrLn ""
+      putStrLn "Sample:"
+      d "sample" >>= showQuest
+      putStrLn ""
+      putStrLn "Actual:"
+      d "actual" >>= showQuest
+      putStrLn ""
 
 tryAnswer :: Int -> Int -> IO ()
 tryAnswer quest part = do
