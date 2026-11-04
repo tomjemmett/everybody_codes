@@ -43,7 +43,7 @@ downloadNotes event quest = do
 
   let kn = mapMaybe decryptNote $ zipWith (liftA2 (,)) keys notes
 
-  forM_ [1 ..] \part -> do
+  forM_ [1 .. 3] \part -> do
     forM_ ["sample", "actual"] \inputType -> do
       let filename = createPath inputType event quest part
       fileExists <- doesFileExist filename

@@ -18,5 +18,8 @@ cradle:
     - path: "app/Y2025.hs"
       component: "everybody-codes:exe:ec2025"
 
+    - path: "app/Y2026.hs"
+      component: "everybody-codes:exe:ec2026"
+
     - path: "test"
       component: "everybody-codes:test:spec"
