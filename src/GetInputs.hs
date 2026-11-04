@@ -6,7 +6,7 @@ import Configuration.Dotenv (defaultConfig, loadFile)
 import Control.Applicative (liftA2)
 import Control.Exception (SomeException, try)
 import Control.Lens ((&), (.~), (^.), (^?))
-import Control.Monad (forM_)
+import Control.Monad (forM_, unless)
 import Crypto.Cipher.AES (AES256)
 import Crypto.Cipher.Types
   ( BlockCipher (cbcDecrypt),
@@ -31,6 +31,7 @@ import Data.Text.Encoding qualified as TE
 import ECSolution (createPath)
 import Network.HTTP.Client (HttpException (..), HttpExceptionContent (..))
 import Network.Wreq
+import System.Directory (doesFileExist)
 import System.Environment (getEnv)
 import Text.Printf (printf)
 
@@ -42,10 +43,18 @@ downloadNotes event quest = do
 
   let kn = mapMaybe decryptNote $ zipWith (liftA2 (,)) keys notes
 
+  forM_ [1 ..] \part -> do
+    forM_ ["sample", "actual"] \inputType -> do
+      let filename = createPath inputType event quest part
+      fileExists <- doesFileExist filename
+      unless fileExists do
+        putStrLn $ " * Creating file " ++ filename
+        writeFile filename ""
+
   putStrLn $ "Downloading inputs for " ++ show event ++ " quest " ++ show quest
   forM_ (zip [1 ..] kn) $ \(part, note) -> do
-    let filename = createPath "actual" event quest part
-    writeFile filename (T.unpack note)
+    let filenameActual = createPath "actual" event quest part
+    writeFile filenameActual (T.unpack note)
     putStrLn $ " * Downloaded part " ++ show part
 
   putStrLn "Done."
