@@ -6,6 +6,6 @@ import System.Environment (getArgs)
 main :: IO ()
 main = do
   args <- getArgs
-  if null args
-    then mapM_ S2.runQuest [1 .. 3]
-    else S2.runQuest (read $ head args)
+  case args of
+    [] -> mapM_ S2.runQuest [1 .. 3]
+    (x : _) -> S2.runQuest (read x)
