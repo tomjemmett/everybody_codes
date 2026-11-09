@@ -51,7 +51,7 @@
             utf8-string,
             vector,
             wreq,
-            base ^>=4.18
+            base ^>=4.20
         default-extensions:
             BangPatterns
             BlockArguments
