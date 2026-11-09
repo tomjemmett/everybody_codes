@@ -78,6 +78,7 @@
             Stories.S1.Quests
             Stories.S2.Quests
             Stories.S3.Quests
+            Stories.S4.Quests
             Common
             ECSolution
             GetInputs
@@ -157,6 +158,10 @@
             Stories.S3.Quest01
             Stories.S3.Quest02
             Stories.S3.Quest03
+        -- Story 4
+            Stories.S4.Quest01
+            Stories.S4.Quest02
+            Stories.S4.Quest03
         hs-source-dirs:   src
         ghc-options: -threaded -rtsopts -O2 -Wno-x-partial
 
@@ -203,6 +208,14 @@
     executable story3
         import:           shared-properties
         main-is:          Story3.hs
+        build-depends:
+            everybody-codes
+        hs-source-dirs:   app
+        ghc-options: -threaded -rtsopts -O2
+
+    executable story4
+        import:           shared-properties
+        main-is:          Story4.hs
         build-depends:
             everybody-codes
         hs-source-dirs:   app
@@ -287,6 +300,10 @@
             Stories.S3.Quest01Spec
             Stories.S3.Quest02Spec
             Stories.S3.Quest03Spec
+        -- Story 4
+            Stories.S4.Quest01Spec
+            Stories.S4.Quest02Spec
+            Stories.S4.Quest03Spec
         -- Tests
             SpecHelper
         hs-source-dirs:   test
