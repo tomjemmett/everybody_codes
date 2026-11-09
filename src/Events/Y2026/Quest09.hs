@@ -10,16 +10,63 @@ quest09 :: String -> IO (Integer, Integer, Integer)
 quest09 = getInput 2026 9 part1 part2 part3
 
 part1 :: String -> Integer
-part1 = solve fst
+part1 = sum . map grow . parseInput
+  where
+    grow :: (Integer, Integer) -> Integer
+    grow (growth, limit) = go 1 1 1 (M.singleton 1 1)
+      where
+        go :: Integer -> Integer -> Integer -> M.Map Integer Integer -> Integer
+        go time size leaves branches
+          | leaves >= limit = time
+          | size + branchCount * timeSkip >= limit =
+              time + (limit - size + branchCount - 1) `div` branchCount
+          | otherwise = go time' size' leaves' branches'
+          where
+            timeSkip = growth - fst (M.findMax branches)
+            branchCount = sum (M.elems branches)
+
+            shifted = M.mapKeysMonotonic (+ timeSkip) branches
+            growthCount = shifted M.! growth
+
+            branches' =
+              M.delete growth $
+                M.insertWith (+) 1 growthCount $
+                  M.insertWith (+) (growth `div` 2) (2 * growthCount) shifted
+
+            size' = size + branchCount * timeSkip + growthCount
+            leaves' = leaves + growthCount
+            time' = time + timeSkip
 
 part2 :: String -> Integer
-part2 = solve snd
+part2 = solve
 
 part3 :: String -> Integer
-part3 = solve snd
+part3 = solve
 
-solve :: ((Integer, Integer) -> Integer) -> String -> Integer
-solve f = sum . map (grow f) . parseInput
+solve :: String -> Integer
+solve = sum . map grow . parseInput
+  where
+    grow :: (Integer, Integer) -> Integer
+    grow (growth, limit) = go 1 1 (M.singleton 1 1)
+      where
+        go :: Integer -> Integer -> M.Map Integer Integer -> Integer
+        go time n branches
+          | n >= limit = time
+          | otherwise = go time' n' branches'
+          where
+            timeSkip = growth - fst (M.findMax branches)
+
+            shifted = M.mapKeysMonotonic (+ timeSkip) branches
+
+            growthCount = shifted M.! growth
+
+            branches' =
+              M.delete growth $
+                M.insertWith (+) 1 growthCount $
+                  M.insertWith (+) (growth `div` 2) (2 * growthCount) shifted
+
+            n' = n + growthCount
+            time' = time + timeSkip
 
 parseInput :: String -> [(Integer, Integer)]
 parseInput = parse (p `P.sepEndBy` P.endOfLine)
@@ -32,27 +79,3 @@ parseInput = parse (p `P.sepEndBy` P.endOfLine)
       pure (growth, limit)
     number :: Parser Integer
     number = read <$> P.many1 P.digit
-
-grow :: ((Integer, Integer) -> Integer) -> (Integer, Integer) -> Integer
-grow f (growth, limit) = go 1 (1, 0, 1) (M.singleton 1 1)
-  where
-    go :: Integer -> (Integer, Integer, Integer) -> M.Map Integer Integer -> Integer
-    go time (c, b, n) branches
-      | f (c + b, n) >= limit = time
-      | otherwise = go time' (c', b', n') branches'
-      where
-        timeSkip = growth - fst (M.findMax branches)
-
-        shifted = M.mapKeysMonotonic (+ timeSkip) branches
-
-        growthCount = shifted M.! growth
-
-        branches' =
-          M.delete growth $
-            M.insertWith (+) 1 growthCount $
-              M.insertWith (+) (growth `div` 2) (2 * growthCount) shifted
-
-        c' = c + 2 * growthCount
-        b' = b + growthCount
-        n' = n + growthCount
-        time' = time + timeSkip
