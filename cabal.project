@@ -1,3 +1,2 @@
 packages: .
 ignore-project: False
-constraints: crypton<1.0.5
