@@ -66,7 +66,7 @@ part1 i = sum $ map (^. collisionCount) $ s ^. ghosts
   where
     (gs, ws) = parseInput i
     (s, _) = execRWS go ws (createInitialState gs)
-    go = forM_ [1 .. 10] $ \_ -> runRound
+    go = forM_ [1 .. 10] $ const runRound
 
 part2 :: String -> Integer
 part2 = solve 10000 1 . parseInput
@@ -81,7 +81,7 @@ parseInput input = (ghosts, walls)
       (row, line) <- zip [0 ..] $ lines input
       (col, char) <- zip [0 ..] line
       pure ((row, col), char)
-    ghosts = zipWith (makeGhost) [0 ..] $ filter ((`elem` "<>^v") . snd) points
+    ghosts = zipWith makeGhost [0 ..] $ filter ((`elem` "<>^v") . snd) points
     walls = M.fromList $ filter ((`elem` "#") . snd) points
 
 solve :: Integer -> Integer -> ([Ghost], Walls) -> Integer
@@ -154,7 +154,7 @@ checkDeletions target = do
   let gs' = filter ((< target) . (^. collisionCount)) gs
 
   if length gs > length gs'
-    then (modify $ set ghosts gs') >> pure True
+    then modify (set ghosts gs') >> pure True
     else pure False
 
 historyKey :: RWS Walls () Quest10State String

@@ -102,7 +102,7 @@ compress g s e = Graph addStraightPaths s e
     findUpLoop = findLoop [first pred, second succ, first succ]
     findDownLoop = findLoop [first succ, second succ, first pred]
 
-    findLoop :: [(Point2d -> Point2d)] -> Point2d -> (Point2d, (Int, Int))
+    findLoop :: [Point2d -> Point2d] -> Point2d -> (Point2d, (Int, Int))
     findLoop moveFns startP = go (0, 0) (startP, '.', moveFns)
       where
         go :: (Int, Int) -> (Point2d, Char, [Point2d -> Point2d]) -> (Point2d, (Int, Int))

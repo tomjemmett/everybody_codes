@@ -2,7 +2,7 @@ module Events.Y2026.Quest12 where
 
 import Common
 import Control.Applicative (liftA2)
-import Control.Monad (forM_)
+import Control.Monad (forM_, void)
 import Control.Monad.State.Strict
 import Data.Bifunctor (first, second)
 import Data.Function (on)
@@ -94,7 +94,7 @@ maximumMatching points = M.size matching
 
     go :: State (M.HashMap Int Int) ()
     go = forM_ (M.keys graph) $ \h ->
-      augment h S.empty >> pure ()
+      void (augment h S.empty)
 
     augment ::
       Int ->

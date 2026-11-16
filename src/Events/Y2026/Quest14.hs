@@ -43,7 +43,7 @@ part3 input = minimum $ map (fst . prim) edges'
     combinations2 :: [Char] -> [String]
     combinations2 [] = []
     combinations2 (x : xs) =
-      [x : y : [] | y <- xs] ++ combinations2 xs
+      [[x, y] | y <- xs] ++ combinations2 xs
 
 parseInput :: String -> M.HashMap (Maybe Char, Maybe Char) Int
 parseInput input = execState (getEdges (M.keys i)) M.empty
@@ -65,7 +65,7 @@ makeGraph :: M.HashMap (Node, Node) Int -> Graph
 makeGraph edges = graph
   where
     nodeMap :: M.HashMap Node Int
-    nodeMap = M.fromList $ zipWith (,) (Nothing : (S.toList $ S.fromList $ map fst $ M.keys edges)) [0 ..]
+    nodeMap = M.fromList $ zip (Nothing : S.toList (S.fromList $ map fst $ M.keys edges)) [0 ..]
     n = M.size nodeMap
 
     graph =

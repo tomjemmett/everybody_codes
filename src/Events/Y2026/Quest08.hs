@@ -118,10 +118,10 @@ getShadows grid = [shadows1, shadows2, shadows3, shadows4, shadows5, shadows6]
     shadows3 = map reverse shadows6
 
     shadows4 :: [[Point2d]]
-    shadows4 = reverse $ (map reverse) shadows1
+    shadows4 = reverse $ map reverse shadows1
 
     shadows5 :: [[Point2d]]
-    shadows5 = reverse $ (map reverse) shadows2
+    shadows5 = reverse $ map reverse shadows2
 
     shadows6 :: [[Point2d]]
     shadows6 = groupBy (\x y -> fst x == fst y) $ sort $ M.keys grid

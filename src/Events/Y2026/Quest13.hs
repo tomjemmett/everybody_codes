@@ -91,7 +91,7 @@ positionAndVelocity circumference clockHand = (p, v)
             CCW -> -scale
 
 ceilDiv :: Int -> Int -> Int
-ceilDiv a b = negate ((negate a) `div` b)
+ceilDiv a b = negate (negate a `div` b)
 
 crossings :: Int -> ClockHand -> ClockHand -> Int
 crossings circumference a b

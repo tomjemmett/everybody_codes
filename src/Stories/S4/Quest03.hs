@@ -5,6 +5,7 @@ import Data.Bifunctor (first, second)
 import Data.Bits (xor)
 import Data.Char (digitToInt)
 import Data.HashMap.Strict qualified as M
+import Data.Maybe (fromMaybe)
 import ECSolution (getInput)
 import Text.Parsec qualified as P
 import Text.Parsec.String (Parser)
@@ -46,7 +47,7 @@ classify size offsets target = foldl' f M.empty [0 .. limit - 1]
       | otherwise = M.insertWith (+) key count b
       where
         v = values' M.! s
-        crossingTarget = maybe v id target
+        crossingTarget = fromMaybe v target
         crossings = (prefix M.! crossingTarget) !! s `mod` 2
         key = (v, s `mod` 2, crossings)
         count = (size - 1 - s) `div` period + 1

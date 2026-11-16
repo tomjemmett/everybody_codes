@@ -124,12 +124,9 @@ part3 = sum . map getSequence . parseInput
         else case M.lookup i a of
           Nothing -> checkLeft start end (pred i) a
           Just v ->
-            if v >= start
+            if (v >= start) || (v <= end)
               then Nothing
-              else
-                if v <= end
-                  then Nothing
-                  else checkLeft start end (pred v) a
+              else checkLeft start end (pred v) a
 
     runSeqLeft :: Int -> Int -> State Arcs (Maybe Int)
     runSeqLeft v x | v < x = runSeqRight v x
