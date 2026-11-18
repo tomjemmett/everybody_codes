@@ -1,315 +1,339 @@
-    cabal-version:      3.6
-    name:               everybody-codes
-    version:            0.0.1
+cabal-version: 3.6
+name: everybody-codes
+version: 0.0.1
+-- A short (one-line) description of the package.
+-- synopsis:
+-- A longer description of the package.
+-- description:
+-- A URL where users can report bugs.
+-- bug-reports:
+-- The license under which the package is released.
+-- license:
+author: Tom Jemmett
+maintainer: thomas.jemmett@nhs.net
 
-    -- A short (one-line) description of the package.
-    -- synopsis:
+common shared-properties
+  build-depends:
+    aeson,
+    arithmoi,
+    array,
+    base ^>=4.20,
+    base16-bytestring,
+    base64-bytestring,
+    bifunctors,
+    bytestring,
+    containers,
+    crypton,
+    directory,
+    dotenv,
+    extra,
+    fgl,
+    hashable,
+    http-client,
+    lens,
+    lens-aeson,
+    mtl,
+    parallel,
+    parsec,
+    pointedlist,
+    pqueue,
+    primes,
+    search-algorithms,
+    split,
+    text,
+    time,
+    timeit,
+    transformers,
+    unordered-containers,
+    uri,
+    utf8-string,
+    vector,
+    wreq,
 
-    -- A longer description of the package.
-    -- description:
+  default-extensions:
+    BangPatterns
+    BlockArguments
+    DataKinds
+    FlexibleContexts
+    FlexibleInstances
+    ImportQualifiedPost
+    LambdaCase
+    MonadComprehensions
+    MultiWayIf
+    RecordWildCards
+    TupleSections
+    TypeApplications
+    TypeOperators
+    ViewPatterns
 
-    -- A URL where users can report bugs.
-    -- bug-reports:
+  default-language: Haskell2010
 
-    -- The license under which the package is released.
-    -- license:
-    author:             Tom Jemmett
-    maintainer:         thomas.jemmett@nhs.net
+library
+  import: shared-properties
+  exposed-modules:
+    Common
+    ECSolution
+    Events.Y2024.Quests
+    Events.Y2025.Quests
+    Events.Y2026.Quests
+    GetInputs
+    Stories.S1.Quests
+    Stories.S2.Quests
+    Stories.S3.Quests
+    Stories.S4.Quests
 
-    common shared-properties
-        build-depends:
-            aeson,
-            arithmoi,
-            array,
-            base16-bytestring,
-            base64-bytestring,
-            bifunctors,
-            bytestring,
-            containers,
-            crypton, 
-            directory,
-            dotenv,
-            extra,
-            fgl,
-            hashable,
-            http-client,
-            lens,
-            lens-aeson,
-            mtl,
-            parallel,
-            parsec,
-            pointedlist,
-            primes,
-            pqueue,
-            search-algorithms,
-            split,
-            text,
-            time,
-            timeit,
-            transformers,
-            unordered-containers,
-            uri,
-            utf8-string,
-            vector,
-            wreq,
-            base ^>=4.20
-        default-extensions:
-            BangPatterns
-            BlockArguments
-            DataKinds
-            FlexibleContexts
-            FlexibleInstances
-            ImportQualifiedPost
-            LambdaCase
-            MonadComprehensions
-            MultiWayIf
-            RecordWildCards
-            TupleSections
-            TypeApplications
-            TypeOperators
-            ViewPatterns
-        default-language: Haskell2010
+  other-modules:
+    Events.Y2024.Quest01
+    Events.Y2024.Quest02
+    Events.Y2024.Quest03
+    Events.Y2024.Quest04
+    Events.Y2024.Quest05
+    Events.Y2024.Quest06
+    Events.Y2024.Quest07
+    Events.Y2024.Quest08
+    Events.Y2024.Quest09
+    Events.Y2024.Quest10
+    Events.Y2024.Quest11
+    Events.Y2024.Quest12
+    Events.Y2024.Quest13
+    Events.Y2024.Quest14
+    Events.Y2024.Quest15
+    Events.Y2024.Quest16
+    Events.Y2024.Quest17
+    Events.Y2024.Quest18
+    Events.Y2024.Quest19
+    Events.Y2024.Quest20
+    Events.Y2025.Quest01
+    Events.Y2025.Quest02
+    Events.Y2025.Quest03
+    Events.Y2025.Quest04
+    Events.Y2025.Quest05
+    Events.Y2025.Quest06
+    Events.Y2025.Quest07
+    Events.Y2025.Quest08
+    Events.Y2025.Quest09
+    Events.Y2025.Quest10
+    Events.Y2025.Quest11
+    Events.Y2025.Quest12
+    Events.Y2025.Quest13
+    Events.Y2025.Quest14
+    Events.Y2025.Quest15
+    Events.Y2025.Quest16
+    Events.Y2025.Quest17
+    Events.Y2025.Quest18
+    Events.Y2025.Quest19
+    Events.Y2025.Quest20
+    Events.Y2026.Quest01
+    Events.Y2026.Quest02
+    Events.Y2026.Quest03
+    Events.Y2026.Quest04
+    Events.Y2026.Quest05
+    Events.Y2026.Quest06
+    Events.Y2026.Quest07
+    Events.Y2026.Quest08
+    Events.Y2026.Quest09
+    Events.Y2026.Quest10
+    Events.Y2026.Quest11
+    Events.Y2026.Quest12
+    Events.Y2026.Quest13
+    Events.Y2026.Quest14
+    Events.Y2026.Quest15
+    Events.Y2026.Quest16
+    Events.Y2026.Quest17
+    Events.Y2026.Quest18
+    Events.Y2026.Quest19
+    Events.Y2026.Quest20
+    Stories.S1.Quest01
+    Stories.S1.Quest02
+    Stories.S1.Quest03
+    Stories.S2.Quest01
+    Stories.S2.Quest02
+    Stories.S2.Quest03
+    Stories.S3.Quest01
+    Stories.S3.Quest02
+    Stories.S3.Quest03
+    Stories.S4.Quest01
+    Stories.S4.Quest02
+    Stories.S4.Quest03
 
-    library
-        import:           shared-properties
-        exposed-modules:
-            Events.Y2024.Quests
-            Events.Y2025.Quests
-            Events.Y2026.Quests
-            Stories.S1.Quests
-            Stories.S2.Quests
-            Stories.S3.Quests
-            Stories.S4.Quests
-            Common
-            ECSolution
-            GetInputs
-        other-modules:
-        -- 2024
-            Events.Y2024.Quest01
-            Events.Y2024.Quest02
-            Events.Y2024.Quest03
-            Events.Y2024.Quest04
-            Events.Y2024.Quest05
-            Events.Y2024.Quest06
-            Events.Y2024.Quest07
-            Events.Y2024.Quest08
-            Events.Y2024.Quest09
-            Events.Y2024.Quest10
-            Events.Y2024.Quest11
-            Events.Y2024.Quest12
-            Events.Y2024.Quest13
-            Events.Y2024.Quest14
-            Events.Y2024.Quest15
-            Events.Y2024.Quest16
-            Events.Y2024.Quest17
-            Events.Y2024.Quest18
-            Events.Y2024.Quest19
-            Events.Y2024.Quest20
-        -- 2025
-            Events.Y2025.Quest01
-            Events.Y2025.Quest02
-            Events.Y2025.Quest03
-            Events.Y2025.Quest04
-            Events.Y2025.Quest05
-            Events.Y2025.Quest06
-            Events.Y2025.Quest07
-            Events.Y2025.Quest08
-            Events.Y2025.Quest09
-            Events.Y2025.Quest10
-            Events.Y2025.Quest11
-            Events.Y2025.Quest12
-            Events.Y2025.Quest13
-            Events.Y2025.Quest14
-            Events.Y2025.Quest15
-            Events.Y2025.Quest16
-            Events.Y2025.Quest17
-            Events.Y2025.Quest18
-            Events.Y2025.Quest19
-            Events.Y2025.Quest20
-        -- 2026
-            Events.Y2026.Quest01
-            Events.Y2026.Quest02
-            Events.Y2026.Quest03
-            Events.Y2026.Quest04
-            Events.Y2026.Quest05
-            Events.Y2026.Quest06
-            Events.Y2026.Quest07
-            Events.Y2026.Quest08
-            Events.Y2026.Quest09
-            Events.Y2026.Quest10
-            Events.Y2026.Quest11
-            Events.Y2026.Quest12
-            Events.Y2026.Quest13
-            Events.Y2026.Quest14
-            Events.Y2026.Quest15
-            Events.Y2026.Quest16
-            Events.Y2026.Quest17
-            Events.Y2026.Quest18
-            Events.Y2026.Quest19
-            Events.Y2026.Quest20
-        -- Story 1
-            Stories.S1.Quest01
-            Stories.S1.Quest02
-            Stories.S1.Quest03
-        -- Story 2
-            Stories.S2.Quest01
-            Stories.S2.Quest02
-            Stories.S2.Quest03
-        -- Story 3
-            Stories.S3.Quest01
-            Stories.S3.Quest02
-            Stories.S3.Quest03
-        -- Story 4
-            Stories.S4.Quest01
-            Stories.S4.Quest02
-            Stories.S4.Quest03
-        hs-source-dirs:   src
-        ghc-options: -threaded -O2 -Wno-x-partial
+  hs-source-dirs: src
+  ghc-options:
+    -threaded
+    -O2
+    -Wno-x-partial
 
-    executable ec2024
-        import:           shared-properties
-        main-is:          Y2024.hs
-        build-depends:
-            everybody-codes
-        hs-source-dirs:   app
-        ghc-options: -threaded -rtsopts -O2
+executable ec2024
+  import: shared-properties
+  main-is: Y2024.hs
+  build-depends:
+    everybody-codes
 
-    executable ec2025
-        import:           shared-properties
-        main-is:          Y2025.hs
-        build-depends:
-            everybody-codes
-        hs-source-dirs:   app
-        ghc-options: -threaded -rtsopts -O2
+  hs-source-dirs: app
+  ghc-options:
+    -threaded
+    -rtsopts
+    -O2
+    -with-rtsopts=-N
 
-    executable ec2026
-        import:           shared-properties
-        main-is:          Y2026.hs
-        build-depends:
-            everybody-codes
-        hs-source-dirs:   app
-        ghc-options: -threaded -rtsopts -O2
+executable ec2025
+  import: shared-properties
+  main-is: Y2025.hs
+  build-depends:
+    everybody-codes
 
-    executable story1
-        import:           shared-properties
-        main-is:          Story1.hs
-        build-depends:
-            everybody-codes
-        hs-source-dirs:   app
-        ghc-options: -threaded -rtsopts -O2
+  hs-source-dirs: app
+  ghc-options:
+    -threaded
+    -rtsopts
+    -O2
+    -with-rtsopts=-N
 
-    executable story2
-        import:           shared-properties
-        main-is:          Story2.hs
-        build-depends:
-            everybody-codes
-        hs-source-dirs:   app
-        ghc-options: -threaded -rtsopts -O2
+executable ec2026
+  import: shared-properties
+  main-is: Y2026.hs
+  build-depends:
+    everybody-codes
 
-    executable story3
-        import:           shared-properties
-        main-is:          Story3.hs
-        build-depends:
-            everybody-codes
-        hs-source-dirs:   app
-        ghc-options: -threaded -rtsopts -O2
+  hs-source-dirs: app
+  ghc-options:
+    -threaded
+    -rtsopts
+    -O2
+    -with-rtsopts=-N
 
-    executable story4
-        import:           shared-properties
-        main-is:          Story4.hs
-        build-depends:
-            everybody-codes
-        hs-source-dirs:   app
-        ghc-options: -threaded -rtsopts -O2
+executable story1
+  import: shared-properties
+  main-is: Story1.hs
+  build-depends:
+    everybody-codes
 
-    test-suite spec
-        import:           shared-properties
-        type:             exitcode-stdio-1.0
-        other-modules:
-        -- 2024
-            Events.Y2024.Quest01Spec
-            Events.Y2024.Quest02Spec
-            Events.Y2024.Quest03Spec
-            Events.Y2024.Quest04Spec
-            Events.Y2024.Quest05Spec
-            Events.Y2024.Quest06Spec
-            Events.Y2024.Quest07Spec
-            Events.Y2024.Quest08Spec
-            Events.Y2024.Quest09Spec
-            Events.Y2024.Quest10Spec
-            Events.Y2024.Quest11Spec
-            Events.Y2024.Quest12Spec
-            Events.Y2024.Quest13Spec
-            Events.Y2024.Quest14Spec
-            Events.Y2024.Quest15Spec
-            Events.Y2024.Quest16Spec
-            Events.Y2024.Quest17Spec
-            Events.Y2024.Quest18Spec
-            Events.Y2024.Quest19Spec
-            Events.Y2024.Quest20Spec
-        -- 2025
-            Events.Y2025.Quest01Spec
-            Events.Y2025.Quest02Spec
-            Events.Y2025.Quest03Spec
-            Events.Y2025.Quest04Spec
-            Events.Y2025.Quest05Spec
-            Events.Y2025.Quest06Spec
-            Events.Y2025.Quest07Spec
-            Events.Y2025.Quest08Spec
-            Events.Y2025.Quest09Spec
-            Events.Y2025.Quest10Spec
-            Events.Y2025.Quest11Spec
-            Events.Y2025.Quest12Spec
-            Events.Y2025.Quest13Spec
-            Events.Y2025.Quest14Spec
-            Events.Y2025.Quest15Spec
-            Events.Y2025.Quest16Spec
-            Events.Y2025.Quest17Spec
-            Events.Y2025.Quest18Spec
-            Events.Y2025.Quest19Spec
-            Events.Y2025.Quest20Spec
-        -- 2026
-            Events.Y2026.Quest01Spec
-            Events.Y2026.Quest02Spec
-            Events.Y2026.Quest03Spec
-            Events.Y2026.Quest04Spec
-            Events.Y2026.Quest05Spec
-            Events.Y2026.Quest06Spec
-            Events.Y2026.Quest07Spec
-            Events.Y2026.Quest08Spec
-            Events.Y2026.Quest09Spec
-            Events.Y2026.Quest10Spec
-            Events.Y2026.Quest11Spec
-            Events.Y2026.Quest12Spec
-            Events.Y2026.Quest13Spec
-            Events.Y2026.Quest14Spec
-            Events.Y2026.Quest15Spec
-            Events.Y2026.Quest16Spec
-            Events.Y2026.Quest17Spec
-            Events.Y2026.Quest18Spec
-            Events.Y2026.Quest19Spec
-            Events.Y2026.Quest20Spec
-        -- Story 1
-            Stories.S1.Quest01Spec
-            Stories.S1.Quest02Spec
-            Stories.S1.Quest03Spec
-        -- Story 2
-            Stories.S2.Quest01Spec
-            Stories.S2.Quest02Spec
-            Stories.S2.Quest03Spec
-        -- Story 3
-            Stories.S3.Quest01Spec
-            Stories.S3.Quest02Spec
-            Stories.S3.Quest03Spec
-        -- Story 4
-            Stories.S4.Quest01Spec
-            Stories.S4.Quest02Spec
-            Stories.S4.Quest03Spec
-        -- Tests
-            SpecHelper
-        hs-source-dirs:   test
-        main-is:          Spec.hs
-        build-depends:
-            hspec >= 2.7,
-            hspec-discover >= 2.7,
-            everybody-codes >= 0.0.1
+  hs-source-dirs: app
+  ghc-options:
+    -threaded
+    -rtsopts
+    -O2
+    -with-rtsopts=-N
+
+executable story2
+  import: shared-properties
+  main-is: Story2.hs
+  build-depends:
+    everybody-codes
+
+  hs-source-dirs: app
+  ghc-options:
+    -threaded
+    -rtsopts
+    -O2
+    -with-rtsopts=-N
+
+executable story3
+  import: shared-properties
+  main-is: Story3.hs
+  build-depends:
+    everybody-codes
+
+  hs-source-dirs: app
+  ghc-options:
+    -threaded
+    -rtsopts
+    -O2
+    -with-rtsopts=-N
+
+executable story4
+  import: shared-properties
+  main-is: Story4.hs
+  build-depends:
+    everybody-codes
+
+  hs-source-dirs: app
+  ghc-options:
+    -threaded
+    -rtsopts
+    -O2
+    -with-rtsopts=-N
+
+test-suite spec
+  import: shared-properties
+  type: exitcode-stdio-1.0
+  other-modules:
+    Events.Y2024.Quest01Spec
+    Events.Y2024.Quest02Spec
+    Events.Y2024.Quest03Spec
+    Events.Y2024.Quest04Spec
+    Events.Y2024.Quest05Spec
+    Events.Y2024.Quest06Spec
+    Events.Y2024.Quest07Spec
+    Events.Y2024.Quest08Spec
+    Events.Y2024.Quest09Spec
+    Events.Y2024.Quest10Spec
+    Events.Y2024.Quest11Spec
+    Events.Y2024.Quest12Spec
+    Events.Y2024.Quest13Spec
+    Events.Y2024.Quest14Spec
+    Events.Y2024.Quest15Spec
+    Events.Y2024.Quest16Spec
+    Events.Y2024.Quest17Spec
+    Events.Y2024.Quest18Spec
+    Events.Y2024.Quest19Spec
+    Events.Y2024.Quest20Spec
+    Events.Y2025.Quest01Spec
+    Events.Y2025.Quest02Spec
+    Events.Y2025.Quest03Spec
+    Events.Y2025.Quest04Spec
+    Events.Y2025.Quest05Spec
+    Events.Y2025.Quest06Spec
+    Events.Y2025.Quest07Spec
+    Events.Y2025.Quest08Spec
+    Events.Y2025.Quest09Spec
+    Events.Y2025.Quest10Spec
+    Events.Y2025.Quest11Spec
+    Events.Y2025.Quest12Spec
+    Events.Y2025.Quest13Spec
+    Events.Y2025.Quest14Spec
+    Events.Y2025.Quest15Spec
+    Events.Y2025.Quest16Spec
+    Events.Y2025.Quest17Spec
+    Events.Y2025.Quest18Spec
+    Events.Y2025.Quest19Spec
+    Events.Y2025.Quest20Spec
+    Events.Y2026.Quest01Spec
+    Events.Y2026.Quest02Spec
+    Events.Y2026.Quest03Spec
+    Events.Y2026.Quest04Spec
+    Events.Y2026.Quest05Spec
+    Events.Y2026.Quest06Spec
+    Events.Y2026.Quest07Spec
+    Events.Y2026.Quest08Spec
+    Events.Y2026.Quest09Spec
+    Events.Y2026.Quest10Spec
+    Events.Y2026.Quest11Spec
+    Events.Y2026.Quest12Spec
+    Events.Y2026.Quest13Spec
+    Events.Y2026.Quest14Spec
+    Events.Y2026.Quest15Spec
+    Events.Y2026.Quest16Spec
+    Events.Y2026.Quest17Spec
+    Events.Y2026.Quest18Spec
+    Events.Y2026.Quest19Spec
+    Events.Y2026.Quest20Spec
+    SpecHelper
+    Stories.S1.Quest01Spec
+    Stories.S1.Quest02Spec
+    Stories.S1.Quest03Spec
+    Stories.S2.Quest01Spec
+    Stories.S2.Quest02Spec
+    Stories.S2.Quest03Spec
+    Stories.S3.Quest01Spec
+    Stories.S3.Quest02Spec
+    Stories.S3.Quest03Spec
+    Stories.S4.Quest01Spec
+    Stories.S4.Quest02Spec
+    Stories.S4.Quest03Spec
+
+  hs-source-dirs: test
+  main-is: Spec.hs
+  build-depends:
+    everybody-codes >=0.0.1,
+    hspec >=2.7,
+    hspec-discover >=2.7,
