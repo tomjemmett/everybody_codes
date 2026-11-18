@@ -24,7 +24,7 @@ flipShade :: (Int -> Int) -> Seq Char -> Int
 flipShade inc tablets = go (0, tablets)
   where
     go (!acc, Seq.Empty) = acc
-    go (!acc, (x :<| xs)) = go $ goL acc x tail toFlip
+    go (!acc, x :<| xs) = go $ goL acc x tail toFlip
       where
         (tail, toFlip) = Seq.spanr (/= x) $ Seq.dropWhileL (== x) xs
 

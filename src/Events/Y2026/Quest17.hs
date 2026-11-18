@@ -4,8 +4,6 @@ import Algorithm.Search
 import Common
 import Data.Set qualified as S
 import ECSolution (getInput)
-import Text.Parsec qualified as P
-import Text.Parsec.String (Parser)
 
 type Position = (Point2d, Direction, Direction)
 
@@ -64,7 +62,7 @@ solve resFn input = resFn east south
           West -> East
 
 parseInput :: String -> (S.Set Point2d, Point2d)
-parseInput input = (S.fromList grid, end)
+parseInput input = (S.fromList grid, maximum grid)
   where
     grid =
       [ (r, c)
@@ -72,4 +70,3 @@ parseInput input = (S.fromList grid, end)
         (c, v) <- zip [0 ..] row,
         v == '#'
       ]
-    end = maximum $ grid
