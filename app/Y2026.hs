@@ -1,11 +1,11 @@
 module Main where
 
-import Events.Y2026.Quests qualified as Y2026
+import Events.Y2026.Quests qualified as Q
 import System.Environment (getArgs)
 
 main :: IO ()
 main = do
   args <- getArgs
   case args of
-    [] -> mapM_ Y2026.runQuest [1 .. 20]
-    (x : _) -> Y2026.runQuest (read x)
+    [] -> mapM_ Q.runQuest [1 .. 20]
+    (x : _) -> Q.runQuest (read x)

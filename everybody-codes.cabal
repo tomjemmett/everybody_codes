@@ -161,8 +161,8 @@ library
   ghc-options:
     -threaded
     -O2
-    -Wno-x-partial
 
+-- -Wno-x-partial
 executable ec2024
   import: shared-properties
   main-is: Y2024.hs

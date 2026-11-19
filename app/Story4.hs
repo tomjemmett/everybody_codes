@@ -1,11 +1,11 @@
 module Main where
 
-import Stories.S4.Quests qualified as S4
+import Stories.S4.Quests qualified as Q
 import System.Environment (getArgs)
 
 main :: IO ()
 main = do
   args <- getArgs
   case args of
-    [] -> mapM_ S4.runQuest [1 .. 3]
-    (x : _) -> S4.runQuest (read x)
+    [] -> mapM_ Q.runQuest [1 .. 3]
+    (x : _) -> Q.runQuest (read x)
