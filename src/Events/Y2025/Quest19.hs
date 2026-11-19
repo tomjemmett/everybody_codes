@@ -1,46 +1,73 @@
 module Events.Y2025.Quest19 where
 
-import Algorithm.Search
-import Common
-import Control.Monad (guard)
+import Common hiding (Interval)
 import Data.HashMap.Strict qualified as M
-import Data.List (sort)
-import Data.Vector qualified as V
+import Data.List (foldl', sortOn)
 import ECSolution (getInput)
 import Text.Parsec qualified as P
 
 quest19 :: String -> IO (Int, Int, Int)
 quest19 = getInput 2025 19 solve solve solve
 
-solve :: String -> Int
-solve (parseInput -> walls) = case search walls of
-  Just c -> c
-  Nothing -> error "No path found"
+data Interval = Interval
+  { lower :: !Int,
+    upper :: !Int
+  }
+  deriving (Show, Eq, Ord)
 
-search :: M.HashMap Int [(Int, Int)] -> Maybe Int
-search walls = fst <$> dijkstra neighbours cost goal (0, 0)
+type Gaps = M.HashMap Int [Interval]
+
+intersect ::
+  Int ->
+  Interval ->
+  Int ->
+  Interval ->
+  Maybe Interval
+intersect x1 (Interval y1Low y1High) x2 (Interval y2Low y2High)
+  | x1 >= x2 = Nothing
+  | yLow <= yHigh = Just (Interval yLow yHigh)
+  | otherwise = Nothing
   where
-    ks = sort $ M.keys walls
-    maxX = maximum ks
-    goal :: Point2d -> Bool
-    goal (x, _) = x == maxX
-    neighbours :: Point2d -> [Point2d]
-    neighbours (x, y) = concatMap go $ walls M.! x'
-      where
-        x' : _ = dropWhile (<= x) ks
-        dx = x' - x
-        go (l, h) = do
-          y' <- [y - dx, y - dx + 2 .. y + dx]
-          guard $ l <= y' && y' <= h
-          pure (x', y')
-    cost :: Point2d -> Point2d -> Int
-    cost (x1, y1) (x2, y2) = (y2 - y1 + x2 - x1) `div` 2
+    dx = x2 - x1
 
-parseInput :: String -> M.HashMap Int [(Int, Int)]
+    y3Low = y1Low - dx
+    y3High = y1High + dx
+
+    yLow = max y2Low y3Low + (x2 + max y2Low y3Low) `mod` 2
+    yHigh = min y2High y3High - (x2 + min y2High y3High) `mod` 2
+
+mergeIntervals :: [Interval] -> [Interval]
+mergeIntervals = foldr merge [] . sortOn lower
+  where
+    merge interval [] = [interval]
+    merge (Interval lo hi) (Interval nextLo nextHi : rest)
+      | nextLo <= hi =
+          Interval lo (max hi nextHi) : rest
+      | otherwise =
+          Interval lo hi : Interval nextLo nextHi : rest
+
+solve :: String -> Int
+solve (parseInput -> gaps) =
+  case foldl' step (0, [Interval 0 0]) (sortOn fst $ M.toList gaps) of
+    (x, Interval y _ : _) ->
+      y + (x - y) `div` 2
+    _ ->
+      error "No reachable intervals"
+  where
+    step (x, reachable) (xNext, nextGaps) =
+      let reachableNext =
+            [ interval
+            | current <- reachable,
+              gap <- nextGaps,
+              Just interval <- [intersect x current xNext gap]
+            ]
+       in (xNext, mergeIntervals reachableNext)
+
+parseInput :: String -> Gaps
 parseInput = M.fromListWith (++) . parse (p `P.sepBy` P.newline)
   where
     p = do
       x <- number' <* P.char ','
       h <- number' <* P.char ','
       s <- number'
-      pure (x, [(h, h + s)])
+      pure (x, [Interval h (h + s)])
