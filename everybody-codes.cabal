@@ -71,18 +71,18 @@ common shared-properties
 library
   import: shared-properties
   exposed-modules:
-    Common
-    ECSolution
+    ECLibrary
     Events.Y2024.Quests
     Events.Y2025.Quests
     Events.Y2026.Quests
-    GetInputs
     Stories.S1.Quests
     Stories.S2.Quests
     Stories.S3.Quests
     Stories.S4.Quests
 
   other-modules:
+    Common
+    ECSolution
     Events.Y2024.Quest01
     Events.Y2024.Quest02
     Events.Y2024.Quest03
@@ -143,6 +143,7 @@ library
     Events.Y2026.Quest18
     Events.Y2026.Quest19
     Events.Y2026.Quest20
+    GetInputs
     Stories.S1.Quest01
     Stories.S1.Quest02
     Stories.S1.Quest03
